@@ -1,0 +1,49 @@
+services:
+  app:
+    image: ghcr.io/shopware/docker-dev:php8.3-node22-caddy
+    ports:
+      - "8800:8000"
+      - "5173:5173"
+    environment:
+      APP_ENV: dev
+      APP_URL: http://localhost:8800
+      DATABASE_URL: mysql://shopware:shopware@database:3306/shopware
+      MAILER_DSN: smtp://mailer:1025
+      OPENSEARCH_URL: http://opensearch:9200
+      ADMIN_OPENSEARCH_URL: http://opensearch:9200
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: shopware
+      MARIADB_DATABASE: shopware
+      MARIADB_USER: shopware
+      MARIADB_PASSWORD: shopware
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-pshopware"]
+      start_interval: 3s
+      start_period: 10s
+      interval: 5s
+      timeout: 1s
+      retries: 10
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"
+  opensearch:
+    image: opensearchproject/opensearch:2
+    environment:
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: 'c3o_ZPHo!'
+      discovery.type: single-node
+      plugins.security.disabled: 'true'
+
+volumes:
+  db-data:

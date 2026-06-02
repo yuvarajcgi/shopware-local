@@ -1,0 +1,36 @@
+# Environment files
+.env.local
+.env.*.local
+
+# Cache and logs
+/var/cache/
+/var/log/
+/var/sessions/
+
+# Vendor (installed via composer)
+/vendor/
+
+# Node modules
+/node_modules/
+
+# Media and uploads
+/public/media/
+/public/thumbnail/
+/files/
+
+# Install lock
+install.lock
+
+# Backup files
+*.sql
+*.zip
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
