@@ -1,0 +1,18 @@
+{
+    "name": "custom/theme",
+    "description": "Custom theme modifications for the storefront",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CustomTheme\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "CustomTheme\\CustomTheme",
+        "label": {
+            "de-DE": "Custom Theme",
+            "en-GB": "Custom Theme"
+        }
+    }
+}
